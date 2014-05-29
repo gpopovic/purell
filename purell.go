@@ -165,6 +165,17 @@ func NormalizeURL(u *url.URL, f NormalizationFlags) string {
 	return u.String()
 }
 
+func Normalize(u *url.URL, f NormalizationFlags) *url.URL{
+	for _, k := range flagsOrder {
+		if f&k == k {
+			flags[k](u)
+		}
+	}
+
+	return u
+	
+}
+
 func lowercaseScheme(u *url.URL) {
 	if len(u.Scheme) > 0 {
 		u.Scheme = strings.ToLower(u.Scheme)
